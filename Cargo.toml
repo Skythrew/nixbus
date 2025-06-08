@@ -1,0 +1,10 @@
+[package]
+name = "nixbus"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+mini-redis = "0.4"
+zbus = "5.7.1"
+zbus_polkit = "5.0.0"

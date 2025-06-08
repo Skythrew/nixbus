@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<policyconfig>
+
+  <action id="io.github.skythrew.nixbus.ConfigurationManager.write">
+    <description>Allow writing configuration files</description>
+    <message>Authentication is required to write configuration files</message>
+    <message xml:lang="fr">Il est nécessaire de vous authentifier pour changer la configuration</message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+  </action>
+
+  <action id="io.github.skythrew.nixbus.ConfigurationManager.rebuild">
+    <description>Allow rebuilding the system</description>
+    <message>Authentication is required to rebuild the system</message>
+    <message xml:lang="fr">Il est nécessaire de vous authentifier pour reconstruire le système</message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+  </action>
+
+</policyconfig>

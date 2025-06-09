@@ -50,6 +50,16 @@
           '';
         };
       in {
+        devShells.default = with pkgs; mkShell {
+          buildInputs = [
+            (pkgs.rust-bin.stable.latest.rust.override {
+              extensions = [ "rust-src" ];
+            })
+          ];
+
+          RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
+        };
+
         packages.default = nixbus;
 
         nixosModules.default = { ... } : {

@@ -24,8 +24,8 @@
           cargo = rustToolchain;
           rustc = rustToolchain;
         };
-      in {
-        packages.default = rustPlatform.buildRustPackage {
+
+        nixbus = rustPlatform.buildRustPackage {
           name = packageName;
           src = ./.;
           
@@ -39,14 +39,29 @@
             mkdir -p $out/bin/
             cp target/${buildTarget}/release/nixbus $out/bin/
 
-            mkdir -p $out/share/dbus-1/services/
-            cp $src/dbus/io.github.skythrew.nixbus.service $out/share/dbus-1/services/io.github.skythrew.nixbus.service
+            mkdir -p $out/share/dbus-1/system.d/
+            cp $src/dbus/io.github.skythrew.nixbus.conf $out/share/dbus-1/system.d/io.github.skythrew.nixbus.conf
 
-            mkdir -p $out/etc/systemd/system
-            cp $src/systemd/nixbus.service $out/etc/systemd/system/nixbus.service
+            mkdir -p $out/lib/systemd/system
+            cp $src/systemd/nixbus.service $out/lib/systemd/system/nixbus.service
           '';
-  
-      };
+        };
+      in {
+        packages.default = nixbus;
+
+        nixosModules.default = { ... } : {
+          environment.systemPackages = [ nixbus ];
+
+          systemd.services.nixbus = {
+            description = "Nixbus D-Bus daemon";
+            wantedBy = [ "multi-user.target" ];
+            serviceConfig.Type = "notify";
+            path = [ nixbus ];
+            script = "${nixbus}/bin/nixbus";
+          };
+
+          services.dbus.packages = [ nixbus ];
+        };
     }
   );
 }

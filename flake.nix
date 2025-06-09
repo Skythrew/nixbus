@@ -44,6 +44,9 @@
 
             mkdir -p $out/lib/systemd/system
             cp $src/systemd/nixbus.service $out/lib/systemd/system/nixbus.service
+
+            mkdir -p $out/share/polkit-1/actions
+            cp $src/polkit/io.github.skythrew.nixbus.policy $out/share/polkit-1/actions/io.github.skythrew.nixbus.policy
           '';
         };
       in {

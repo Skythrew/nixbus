@@ -58,7 +58,7 @@
           systemd.services.nixbus = {
             description = "Nixbus D-Bus daemon";
             wantedBy = [ "multi-user.target" ];
-            serviceConfig.Type = "notify";
+            serviceConfig.Type = "simple";
             path = [ nixbus ];
             script = "${nixbus}/bin/nixbus";
           };

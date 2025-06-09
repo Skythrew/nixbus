@@ -19,7 +19,7 @@ impl ConfigurationManager {
     async fn rebuild(&self, #[zbus(header)] header: Header<'_>) -> i32 {
         if !check_authorization(&header, "io.github.skythrew.nixbus.ConfigurationManager.rebuild").await { return -1 }
 
-        let output = Command::new("nixos-rebuild switch")
+        let output = Command::new("/run/current-system/sw/bin/nixos-rebuild switch")
             .output();
 
         match output {
